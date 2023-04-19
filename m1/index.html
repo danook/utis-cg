@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title id="title">[utokyo-iscg-2023] Basic Assignment M1 (Spline)</title>
+<script src="https://rawcdn.githack.com/toji/gl-matrix/v3.3.0/dist/gl-matrix-min.js"></script>
+<script src="https://bbcdn.githack.com/kenshi84/legacygl.js/raw/master/gl-matrix-util.js"></script>
+<script src="https://bbcdn.githack.com/kenshi84/legacygl.js/raw/master/legacygl.js"></script>
+<script src="https://bbcdn.githack.com/kenshi84/legacygl.js/raw/master/drawutil.js"></script>
+<script src="https://bbcdn.githack.com/kenshi84/legacygl.js/raw/master/camera.js"></script>
+<script src="https://bbcdn.githack.com/kenshi84/legacygl.js/raw/master/util.js"></script>
+<script src="https://bbcdn.githack.com/kenshi84/legacygl.js/raw/master/glu.js"></script>
+<script src="main.js"></script>
+</head>
+<body>
+  <h1>[utokyo-iscg-2023] Basic Assignment M1 (Spline)</h1>
+  <canvas id="canvas" width="640" height="480" style="border:1px solid #000000"></canvas>
+  <table>
+    <tr>
+      <td>Number of Steps:</td>
+      <td colspan="2">
+        <input type="number" id="input_numsteps" step="1" min="2" value="20">
+      </td>
+    </tr>
+    <tr>
+      <td>Show Control Points:</td>
+      <td colspan="2">
+        <input type="checkbox" id="input_show_controlpoints" checked>
+      </td>
+    </tr>
+    <tr>
+      <td>Show Sample Points:</td>
+      <td colspan="2">
+        <input type="checkbox" id="input_show_samplepoints" checked>
+      </td>
+    </tr>
+    <tr>
+      <td>Use de Casteljau's algorithm</td>
+      <td colspan="2">
+        <input type="checkbox" id="input_use_de_casteljau">
+      </td>
+    </tr>
+
+    <tr>
+      <td></td>
+    </tr>
+  </table>
+
+  <h2>Usage:</h2>
+  <ul>
+    <li>Right click: Add a new Control Point</li>
+    <li>Drag: Move Control Points</li> 
+    <li>Alt+Drag: Camera Pan</li>
+    <li>Alt+Shift+drag: Camera Zoom</li>
+  </ul>
+
+  <h2>Comment</h2>
+  <p>
+    一般のn次ベジェ曲線を描画するプログラムを作成した。実装方法については、多項式をそのまま評価する方法と、de Casteljauのアルゴリズムの双方を実装し、チェックボックスで切り替えられるようにした。
+  </p>
+  <p>
+    制御点の集合はcontrol_points配列で管理し、右クリックを行うとその場所に制御点が追加される実装になっている。
+  </p>
+
+  <p>
+    各パラメタtに対応する点の座標を求める関数がeval_bezierである。この関数の実行内容は、チェックボックス"input_use_de_casteljau"のチェックの有無によって切り替わるようになっている。多項式の評価とde Casteljauのアルゴリズムの計算式はスライドに基づいている。
+  </p>
+  <p>
+    整理のためJavascriptの記述はこのHTMLではなくmain.jsファイルに移植した。
+  </p>  
+</body>
+</html>
