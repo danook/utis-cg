@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title id="title">[utokyo-iscg] Basic Assignment A1 (Inverse Kinematics)</title>
+  <script src="https://rawcdn.githack.com/toji/gl-matrix/v3.3.0/dist/gl-matrix-min.js"></script>
+  <script src="https://bbcdn.githack.com/kenshi84/legacygl.js/raw/master/gl-matrix-util.js"></script>
+  <script src="https://bbcdn.githack.com/kenshi84/legacygl.js/raw/master/legacygl.js"></script>
+  <script src="https://bbcdn.githack.com/kenshi84/legacygl.js/raw/master/drawutil.js"></script>
+  <script src="https://bbcdn.githack.com/kenshi84/legacygl.js/raw/master/camera.js"></script>
+  <script src="https://bbcdn.githack.com/kenshi84/legacygl.js/raw/master/util.js"></script>
+  <script src="https://bbcdn.githack.com/kenshi84/legacygl.js/raw/master/glu.js"></script>
+  <script src="main.js"></script>
+</head>
+
+<body onload="init(); draw();">
+  <h1>
+    <script>document.write(document.getElementById("title").innerHTML);</script>
+  </h1>
+  <table>
+    <tr>
+      <td>
+        <canvas id="canvas" width="800" height="600" style="border:1px solid #000000"></canvas>
+      </td>
+      <td>
+        <ul>
+          <li>Selected Linkage: <input type="number" id="input_selected" step="1" min="0" value="0"></li>
+          <li>Selected Linkage's Angle: <input type="number" id="input_angle" step="5" value="0"></li>
+          <li><input type="checkbox" id="input_ikmode"> IK Mode (otherwise FK Mode)</li>
+          <li>Usage:</li>
+          <ul>
+            <li>Drag: Move the target position for the IK end effector (IK mode only)</li>
+          </ul>
+        </ul>
+      </td>
+    </tr>
+  </table>
+
+  <h2>Comment</h2>
+
+  <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
+  <script src="https://button.glitch.me/button.js"></script>
+</body>
+
+</html>
