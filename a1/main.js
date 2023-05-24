@@ -32,8 +32,20 @@ function update_position() {
   });
 };
 
-function compute_ik(target_position) {
-  // TODO: ここにCCD法を実装する
+function compute_ik(target_pos, n=100) {
+  function calc_angle(pos, target_pos) {
+    return Math.atan2(target_pos[1] - pos[1], target_pos[0] - pos[0]) * 180 / Math.PI;
+  }
+
+  for (let i = 0; i < n; ++i) {
+    for (let j = linkages.length - 1; j >= 0; --j) {
+      let tip_pos = linkages[linkages.length - 1].position;
+      let root_pos = j === 0 ? [0., 0.] : linkages[j - 1].position;
+      let rotate_angle = calc_angle(root_pos, target_pos) - calc_angle(root_pos, tip_pos);;
+      linkages[j].angle += rotate_angle;
+      update_position();
+    }
+  }
 };
 
 function draw() {

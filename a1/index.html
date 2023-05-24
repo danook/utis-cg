@@ -38,9 +38,12 @@
   </table>
 
   <h2>Comment</h2>
-
-  <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
-  <script src="https://button.glitch.me/button.js"></script>
+  <p>
+    main.js内のcompute_ik関数を完成させ、CCD法によるIKを完成させた。
+  </p>
+  <p>
+    各jについて、linkages[j-1]の位置、先端の位置、目標位置からlinkages[j]以降の回転角を計算し、update_position関数を使用して実際に回転後のlinkagesの位置や角度を計算している。回転角の計算はMath.atan2関数を用いた。これをn=100回繰り返している。
+  </p>
 </body>
 
 </html>
