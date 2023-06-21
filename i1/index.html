@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title id="title">[utokyo-iscg-2023] Basic Assignment I1 (Image filtering)</title>
+<script src="main.js"></script>
+</head>
+<body onload="init()">
+  <h1><script type="text/javascript">document.write(document.getElementById("title").innerHTML);</script></h1>
+  <div>
+    <h2>説明 (主に配布されたサンプルプログラムからの変更点)</h2>
+    <p>
+      画像のsmoothingの処理として、元々実装されていたGaussian filterに加えて、Bilateral filter, Joint bilateral filter, Rolling guidance filterの3種類を実装した。元画像とJoint bilateral filter用のガイド画像はそれぞれ下のUpload Imagesの所からアップロードができる。パラメータsigma_space, sigma_range, iterations(=Rolling guidance filterの繰り返し適用回数)はResult Imagesの下の入力ボックスで調整できる。
+    </p>
+    <p>
+      実装の説明と考察は最下部にあります。
+    </p>
+  </div>
+  <div>
+    <h2>Uploaded Images</h2>
+    <p>
+      Upload Original Image: <input type="file" id="input_file_original" accept="image/*">
+    </p>
+    <p>
+      Upload Guidance Image: <input type="file" id="input_file_guidance" accept="image/*">
+    </p>
+    <table><tr valign="top">
+      <td align="center"><img id="img_original" crossorigin="anonymous"><br>Original</td>
+      <td align="center"><img id="img_guidance" crossorigin="anonymous"><br>Guidance</td>
+    </tr></table>
+  </div>
+  <div>
+    <h2>Result Images</h2>
+    <ul>
+      <li>Filter type: 
+        <select name="Filter Type" id="input_filter_type">
+          <option value="gaussian">Gaussian Filter</option>
+          <option value="bilateral">Bilateral Filter</option>
+          <option value="joint">Joint Bilateral Filter</option>
+          <option value="rolling">Rolling Guidance Filter</option>
+        </select>
+      </li>
+      <li>Sigma_Space: <input type="number" id="input_num_sigma_space" step="1" min="1" value="5"></li>
+      <li>Sigma_Range: <input type="number" id="input_num_sigma_range" step="1" min="1" value="25"></li>
+      <li>Iterations: <input type="number" id="input_num_iterations" step="1" min="1" value="5"></li>
+      <li><button id="btn_do_smoothing">Do Smoothing</button></li>
+      <li>Detail Scaling: <input type="number" id="input_num_detail_scaling" step="0.1" min="0" value="2"></li>
+      <li><button id="btn_enhance_detail">Enhance Detail</button></li>
+    </ul>
+    <table><tr valign="top">
+      <td align="center"><img id="img_smoothed"><br>Smoothed</td>
+      <td align="center"><img id="img_detail"><br>Detail<br>= Original - Smoothed</td>
+      <td align="center"><img id="img_enhanced"><br>Enhanced<br>= Smoothed + s * Detail</td>
+    </tr></table>
+  </div>
+  <div>
+    <h2>実装の説明</h2>
+    <p>
+      Joint bilateral filterは、与えられたサンプルプログラムを元に、各画素値にターゲット画素との距離のGaussian kernelに加えて、ガイド画像における画素値の距離(=sqrt((r1-r0)^2 + (g1-g0)^2 + (b1-b0)^2))を掛けたものを重みとしている。Bilateral filterは、Joint bilateral filterのガイド画像=入力画像とすることで実装している。
+    </p>
+  </div>
+  <div>
+    <h2>考察</h2>
+    <p>
+      以下は初期設定のパラメータ値でGaussian, Bilateral, Rolling Guidanceの各フィルタを適用した結果である。
+    </p>
+    <table><tr valign="top">
+      <td align="center"><img src="images/gaussian.png"><br>Gaussian Filter</td>
+      <td align="center"><img src="images/bilateral.png"><br>Bilateral Filter</td>
+      <td align="center"><img src="images/rolling.png"><br>Rolling Guidance Filter</td>
+    </tr></table>
+    <p>
+      これを見ると、Bilateral filterとRolling guidance filterはGaussian filterに比べてedge-awareな平滑化が行われていると分かる。また、Rolling guidance filterはBilateral filterに比べると、岩の細かい影の部分(細かいテクスチャだが色調の差は大きい部分)が平滑になっている傾向がある。一方で、色調が離散化しているほか、エッジの形も元画像より丸みを帯びて変わってしまっており、この画像においては、Rolling guidance filterは平滑化の手法として適切でないように思われる。
+    </p>
+  </div>
+</body>
+</html>
